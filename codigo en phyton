@@ -1,0 +1,41 @@
+#Definimos la funcion para resolver la secante
+def secante(f, x1, x2, tol):
+
+    #inicializamos variables
+    error = 1e3
+    n = 0 
+    x3 = 0 
+
+    print("{:<10s}| {:<10s}| {:<20s}| {:<20s}| {:<20s}| {:<20s}| {:<20s}".format("Iteración", "x1", "x2", "f(x1)", "f(x2)", "x3" , "Error"))
+    print("-"*120)
+    
+    #un ciclo para que itere hasta encontrar la raíz
+    while error > tol:
+
+        x3 = x1 - ((x2 - x1) / (f(x2) - f(x1))) * f(x1)
+        x1 = x2
+        x2 = x3
+        error = abs(f(x3))
+        porcentual= (((x3-x1) / (x3))*100)
+        
+        while porcentual < 0:
+            porcentual=porcentual*-1
+            
+        porcentual = round(porcentual, 2)
+
+        n += 1
+        #imprimir los datos que se van guardando en las variables
+        print("{:<10d}| {:<10.6f}| {:<20.6f}| {:<20.6f}| {:<20.6f}| {:<20.6f}| {:.2f}%".format(n, x1, x2, f(x1), f(x2), x3, porcentual))
+    print("-"*120)
+    #imprime la solución final
+    print("La raíz es: {:.6f}".format(x3))
+    print("Total de iteraciones: {:d}".format(n))
+
+#función 
+f = lambda x: x*3 - 7*x*2 + 14*x - 6.0
+
+#tolerancia del 2%
+tol_abs = 0.02
+
+#llamado de funcion y enviamos los respectivos valores x1=0 x2=1
+secante(f, 0, 1, tol_abs)
